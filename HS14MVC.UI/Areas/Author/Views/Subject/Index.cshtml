@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HS14MVC.UI.Areas.Author.Models.SubjectVMs.SubjectListVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int row = 0;
+}
+
+
+<h1>Subjects</h1>
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Create New Subject</a>
+</p>
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            row++;
+            <tr>
+                <td>
+                    @row;
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Update", "Update", new { id = item.Id }, new { @class = "btn btn-outline-secondary" }) |
+                    
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

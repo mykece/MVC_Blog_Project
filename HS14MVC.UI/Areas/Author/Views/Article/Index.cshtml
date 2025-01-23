@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<HS14MVC.UI.Areas.Author.Models.ArticleVMs.ArticleListVM>
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string userName = UserManager.GetUserAsync(User).Result.UserName;
+    string displayName = userName.Contains("@") ? userName.Split('@')[0] : userName;
+}
+
+<h1>@displayName'e ait makaleler</h1>
+<style>
+    .btn-custom {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        background-color: #1a73e8;
+        border: none;
+        border-radius: 4px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #1664c1;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table th {
+        white-space: nowrap;
+    }
+
+    .table td img {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Create New Article</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                Author Full Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.Image is null)
+                    {
+                        <p style="color:red; font-weight:bold; ">Resim Yok</p>
+                    }
+                    else
+                    {
+                        <img style="height: 50px; width: auto; object-fit: cover" src="@($"data:image/png;base64,{Convert.ToBase64String(item.Image)}")" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorFirstName) @Html.DisplayFor(modelItem => item.AuthorLastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Update", "Update", new { id = item.Id }, new { @class = "btn btn-outline-secondary" }) 
+                    <hr />
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
