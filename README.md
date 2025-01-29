@@ -185,7 +185,7 @@ public class MailService : IMailService
         try
         {
             var newMail = new MimeMessage();
-            newMail.From.Add(MailboxAddress.Parse("marka.musayw@gmail.com"));  // Gönderen e-posta adresi
+            newMail.From.Add(MailboxAddress.Parse("YOUR-EMAİL"));  // Gönderen e-posta adresi
             newMail.To.Add(MailboxAddress.Parse(sendMailDTO.Email));  // Alıcı e-posta adresi
             newMail.Subject = sendMailDTO.Subject;  // E-posta konusu
             var builder = new BodyBuilder();
@@ -198,7 +198,7 @@ public class MailService : IMailService
             await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
             
             // E-posta hesabı doğrulaması
-            await smtp.AuthenticateAsync("marka.musayw@gmail.com", "gsprxolgcvndohgb");  // Burada, Gmail hesabınızın uygulama şifresini kullanmalısınız.
+            await smtp.AuthenticateAsync("YOUR-EMAİL", "YOUR EMAİL CODE Forexample = gsprxolgcvndohgb");  // Burada, Gmail hesabınızın uygulama şifresini kullanmalısınız.
             
             // E-postayı gönder
             await smtp.SendAsync(newMail);
